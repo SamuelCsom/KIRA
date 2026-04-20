@@ -393,14 +393,14 @@
       .showcase-grid {
         display: grid;
         grid-template-columns: 1.08fr 0.92fr;
-        gap: 18px;
+        gap: 22px;
       }
 
       .detail-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-        margin-top: 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 22px;
       }
 
       .stack {
@@ -409,7 +409,7 @@
       }
 
       .screenshot-card {
-        padding: 14px;
+        padding: 18px;
         border-radius: 28px;
       }
 
@@ -436,18 +436,22 @@
       }
 
       .shot-frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         overflow: hidden;
         border-radius: 22px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         background:
           radial-gradient(circle at top left, rgba(129, 150, 255, 0.12), transparent 30%),
           linear-gradient(180deg, rgba(21, 34, 72, 0.98), rgba(16, 27, 58, 0.94));
+        min-height: 320px;
       }
 
       .shot-frame img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
+        object-fit: contain;
       }
 
       .shot-caption {
@@ -501,8 +505,8 @@
 
       .info-grid {
         display: grid;
-        grid-template-columns: 1.08fr 0.92fr;
-        gap: 18px;
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
 
       .install-card,
@@ -520,7 +524,7 @@
       .step-card {
         display: grid;
         gap: 12px;
-        padding: 16px;
+        padding: 20px;
         border-radius: 22px;
       }
 
@@ -559,11 +563,17 @@
         overflow: hidden;
         border-radius: 18px;
         border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+        min-height: 260px;
       }
 
       .step-shot img {
         width: 100%;
         height: auto;
+      }
+
+      .contact-card {
+        max-width: 760px;
       }
 
       .contact-links {
@@ -646,6 +656,18 @@
         .hero-metrics,
         .hero-mini-grid {
           grid-template-columns: 1fr;
+        }
+
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .shot-frame {
+          min-height: 260px;
+        }
+
+        .step-shot {
+          min-height: 200px;
         }
       }
 
