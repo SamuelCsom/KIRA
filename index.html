@@ -6,23 +6,37 @@
     <title>FAQ - Facts and Quiz</title>
     <meta
       name="description"
-      content="FAQ is a Chrome extension that turns everyday curiosity into quick facts, progress tracking, and true/false quizzes."
+      content="FAQ is a polished Chrome extension for browsing curated facts, tracking progress, saving favorites, and playing a fast true/false quiz."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
     />
     <style>
       :root {
         color-scheme: dark;
-        --bg-1: #07111f;
-        --bg-2: #0d1730;
-        --bg-3: #142248;
-        --card: rgba(15, 27, 58, 0.78);
-        --card-strong: rgba(18, 32, 69, 0.92);
-        --line: rgba(214, 226, 255, 0.16);
-        --text: #e9efff;
-        --muted: #bac8ea;
-        --accent: #7c93ff;
-        --accent-2: #57c7ff;
-        --accent-3: #8df0c5;
-        --shadow: 0 28px 60px rgba(0, 6, 24, 0.42);
+        --bg-top: #060d1c;
+        --bg-mid: #0b1430;
+        --bg-bottom: #12204a;
+        --card: rgba(17, 28, 63, 0.8);
+        --card-strong: rgba(19, 33, 73, 0.94);
+        --card-soft: rgba(255, 255, 255, 0.05);
+        --line: rgba(216, 228, 255, 0.14);
+        --line-strong: rgba(160, 182, 255, 0.24);
+        --text: #eef3ff;
+        --muted: #b8c8e8;
+        --muted-strong: #d8e4ff;
+        --accent: #8196ff;
+        --accent-2: #56c7ff;
+        --accent-3: #8ff0ca;
+        --warning: #ffd979;
+        --shadow-xl: 0 32px 80px rgba(2, 8, 28, 0.5);
+        --shadow-lg: 0 18px 40px rgba(2, 8, 28, 0.36);
+        --radius-xl: 32px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
       }
 
       * {
@@ -35,12 +49,40 @@
 
       body {
         margin: 0;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: Inter, "Segoe UI", sans-serif;
         color: var(--text);
         background:
-          radial-gradient(circle at top left, rgba(124, 147, 255, 0.2), transparent 28%),
-          radial-gradient(circle at 85% 14%, rgba(87, 199, 255, 0.14), transparent 24%),
-          linear-gradient(180deg, var(--bg-1), var(--bg-2) 42%, var(--bg-3));
+          radial-gradient(circle at 12% 10%, rgba(129, 150, 255, 0.22), transparent 24%),
+          radial-gradient(circle at 88% 16%, rgba(86, 199, 255, 0.18), transparent 22%),
+          radial-gradient(circle at 50% 100%, rgba(143, 240, 202, 0.08), transparent 32%),
+          linear-gradient(180deg, var(--bg-top), var(--bg-mid) 42%, var(--bg-bottom));
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        inset: auto;
+        width: 420px;
+        height: 420px;
+        border-radius: 999px;
+        pointer-events: none;
+        filter: blur(90px);
+        opacity: 0.22;
+        z-index: 0;
+      }
+
+      body::before {
+        top: -120px;
+        left: -80px;
+        background: #7085ff;
+      }
+
+      body::after {
+        right: -120px;
+        top: 280px;
+        background: #46c0ff;
       }
 
       a {
@@ -53,36 +95,130 @@
         max-width: 100%;
       }
 
+      .page-shell {
+        position: relative;
+        z-index: 1;
+      }
+
       .container {
-        width: min(1140px, calc(100% - 32px));
+        width: min(1180px, calc(100% - 32px));
         margin: 0 auto;
       }
 
-      .hero {
-        padding: 32px 0 72px;
+      .site-nav {
+        position: sticky;
+        top: 14px;
+        z-index: 10;
+        padding-top: 14px;
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(10, 18, 42, 0.72);
+        backdrop-filter: blur(18px) saturate(160%);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .nav-brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        padding: 5px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .nav-title {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .nav-subtitle {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted-strong);
+      }
+
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .hero,
+      .section {
+        padding: 28px 0;
       }
 
       .hero-card,
       .section-card,
-      .device-frame,
       .feature-card,
+      .install-card,
       .contact-card,
-      .install-card {
-        background: linear-gradient(180deg, rgba(28, 43, 87, 0.9), var(--card));
+      .screenshot-card,
+      .step-card {
+        background: linear-gradient(180deg, var(--card-strong), var(--card));
         border: 1px solid var(--line);
-        box-shadow: var(--shadow);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .hero-card,
+      .section-card {
+        border-radius: var(--radius-xl);
+        padding: 30px;
       }
 
       .hero-card {
         display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-        gap: 28px;
+        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+        gap: 30px;
         align-items: center;
-        border-radius: 30px;
-        padding: 28px;
       }
 
-      .brand {
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        background: rgba(129, 150, 255, 0.14);
+        color: #dbe5ff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .brand-row {
         display: inline-flex;
         align-items: center;
         gap: 16px;
@@ -90,27 +226,13 @@
       }
 
       .brand-mark {
-        width: 68px;
-        height: 68px;
-        border-radius: 20px;
-        padding: 8px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
-        border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        padding: 8px 12px;
-        border-radius: 999px;
-        border: 1px solid rgba(151, 176, 255, 0.24);
-        background: rgba(124, 147, 255, 0.12);
-        color: #dce5ff;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        width: 76px;
+        height: 76px;
+        padding: 10px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
       }
 
       h1,
@@ -120,25 +242,59 @@
         margin: 0;
       }
 
-      h1 {
-        margin-top: 14px;
-        font-size: clamp(42px, 7vw, 72px);
-        line-height: 0.96;
-        letter-spacing: -0.05em;
+      h1,
+      h2,
+      h3,
+      .display-font {
+        font-family: "Space Grotesk", Inter, sans-serif;
       }
 
-      .subtitle {
+      h1 {
+        margin-top: 14px;
+        font-size: clamp(44px, 7vw, 82px);
+        line-height: 0.93;
+        letter-spacing: -0.06em;
+      }
+
+      .hero-subtitle {
         margin-top: 12px;
-        font-size: 20px;
-        color: #d8e4ff;
+        font-size: 22px;
+        color: #d8e3ff;
         font-weight: 600;
       }
 
-      .lead {
+      .hero-lead {
         margin-top: 18px;
-        max-width: 60ch;
+        max-width: 62ch;
         font-size: 17px;
-        line-height: 1.7;
+        line-height: 1.78;
+        color: var(--muted);
+      }
+
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .metric-card {
+        padding: 16px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .metric-value {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .metric-label {
+        margin-top: 8px;
+        font-size: 13px;
         color: var(--muted);
       }
 
@@ -146,7 +302,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 26px;
+        margin-top: 24px;
       }
 
       .button {
@@ -154,215 +310,97 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        min-height: 52px;
+        min-height: 54px;
         padding: 0 18px;
-        border-radius: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
         font-size: 15px;
-        font-weight: 700;
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        font-weight: 800;
       }
 
       .button-primary {
-        background: linear-gradient(135deg, var(--accent), #5b6ff0);
+        background: linear-gradient(135deg, var(--accent), #5a70ef);
       }
 
       .button-secondary {
         background: rgba(255, 255, 255, 0.06);
       }
 
-      .meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 20px;
-      }
-
-      .meta-chip {
-        padding: 9px 12px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 13px;
-        color: var(--muted);
-      }
-
-      .hero-preview {
+      .hero-shot-stack {
         display: grid;
-        gap: 18px;
-      }
-
-      .device-frame {
-        border-radius: 28px;
-        padding: 14px;
-      }
-
-      .device-frame.large {
-        min-height: 520px;
-      }
-
-      .device-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        color: #d2ddfb;
-        font-size: 12px;
-      }
-
-      .dots {
-        display: inline-flex;
-        gap: 6px;
-      }
-
-      .dots span {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.22);
-      }
-
-      .screen {
-        min-height: 100%;
-        border-radius: 22px;
-        padding: 16px;
-        background:
-          radial-gradient(circle at top left, rgba(124, 147, 255, 0.14), transparent 32%),
-          linear-gradient(180deg, rgba(21, 33, 70, 0.98), rgba(17, 28, 61, 0.94));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      .mini-top {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 14px;
-      }
-
-      .mini-logo {
-        width: 34px;
-        height: 34px;
-        padding: 4px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      .mini-title {
-        font-size: 15px;
-        font-weight: 700;
-      }
-
-      .mini-subtitle {
-        margin-top: 2px;
-        font-size: 12px;
-        color: var(--muted);
-      }
-
-      .tab-row {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-bottom: 14px;
-        padding: 6px;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .tab,
-      .answer-btn {
-        border-radius: 14px;
-        text-align: center;
-        padding: 12px 10px;
-        font-size: 13px;
-        font-weight: 700;
-      }
-
-      .tab.active,
-      .answer-btn.active {
-        background: linear-gradient(135deg, var(--accent), #6075f4);
-      }
-
-      .toolbar-row {
-        display: grid;
-        grid-template-columns: 1fr 160px;
-        gap: 10px;
-        margin-bottom: 14px;
-      }
-
-      .input-shell,
-      .toggle-shell,
-      .fact-card,
-      .score-shell,
-      .progress-shell {
-        border-radius: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .input-shell,
-      .toggle-shell {
-        min-height: 52px;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #d7e3ff;
-        font-size: 14px;
-      }
-
-      .fact-card {
-        min-height: 220px;
-        padding: 18px;
-        display: grid;
-        align-content: start;
         gap: 16px;
       }
 
-      .fact-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+      .hero-main-shot {
+        overflow: hidden;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
       }
 
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 12px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 800;
+      .hero-main-shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .hero-mini-card {
+        padding: 14px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-mini-label {
+        font-size: 12px;
+        font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #dce6ff;
-        background: rgba(124, 147, 255, 0.16);
+        color: #dbe5ff;
       }
 
-      .star {
-        width: 42px;
-        height: 42px;
-        border-radius: 999px;
+      .hero-mini-copy {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .section-heading {
+        max-width: 68ch;
+        margin-bottom: 24px;
+      }
+
+      .section-heading h2 {
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+
+      .section-heading p {
+        margin-top: 10px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+
+      .showcase-grid {
         display: grid;
-        place-items: center;
-        color: #ffd76b;
-        border: 1px solid rgba(255, 215, 107, 0.45);
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 18px;
       }
 
-      .fact-copy {
-        font-size: 28px;
-        line-height: 1.28;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-      }
-
-      .screen-action {
-        margin-top: 14px;
-        min-height: 52px;
+      .detail-grid {
         display: grid;
-        place-items: center;
-        border-radius: 16px;
-        font-size: 15px;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--accent), #6075f4);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
       }
 
       .stack {
@@ -370,108 +408,78 @@
         gap: 18px;
       }
 
-      .score-shell,
-      .progress-shell {
+      .screenshot-card {
         padding: 14px;
+        border-radius: 28px;
       }
 
-      .score-shell {
+      .shot-head {
         display: flex;
-        gap: 10px;
-      }
-
-      .score-pill {
-        flex: 1;
-        padding: 10px 12px;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.05);
-        font-size: 13px;
-        color: var(--muted);
-      }
-
-      .quiz-statement {
-        min-height: 150px;
-        margin-top: 12px;
-        font-size: 22px;
-        line-height: 1.35;
-        font-weight: 700;
-      }
-
-      .answers {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .progress-item + .progress-item {
-        margin-top: 12px;
-      }
-
-      .progress-head {
-        display: flex;
+        align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 8px;
-        font-size: 13px;
+        margin-bottom: 12px;
+        color: #d6e1fc;
+        font-size: 12px;
       }
 
-      .bar {
-        height: 9px;
+      .shot-dots {
+        display: inline-flex;
+        gap: 6px;
+      }
+
+      .shot-dots span {
+        width: 8px;
+        height: 8px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .shot-frame {
         overflow: hidden;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background:
+          radial-gradient(circle at top left, rgba(129, 150, 255, 0.12), transparent 30%),
+          linear-gradient(180deg, rgba(21, 34, 72, 0.98), rgba(16, 27, 58, 0.94));
       }
 
-      .bar > span {
-        display: block;
+      .shot-frame img {
+        width: 100%;
         height: 100%;
-        border-radius: inherit;
-        background: linear-gradient(90deg, var(--accent-2), var(--accent));
+        object-fit: cover;
       }
 
-      .section {
-        padding: 0 0 28px;
-      }
-
-      .section-card {
-        border-radius: 28px;
-        padding: 28px;
-      }
-
-      .section-heading {
-        max-width: 64ch;
-        margin-bottom: 24px;
-      }
-
-      .section-heading h2 {
-        font-size: clamp(28px, 4vw, 44px);
-        line-height: 1.04;
-        letter-spacing: -0.04em;
-      }
-
-      .section-heading p {
-        margin-top: 10px;
-        font-size: 16px;
-        line-height: 1.7;
+      .shot-caption {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.65;
         color: var(--muted);
-      }
-
-      .devices-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 18px;
       }
 
       .features-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 16px;
       }
 
       .feature-card {
-        border-radius: 22px;
-        padding: 18px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        padding: 20px;
+      }
+
+      .feature-card::after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        width: 120px;
+        height: 120px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(129, 150, 255, 0.18), transparent 70%);
+        pointer-events: none;
       }
 
       .feature-symbol {
@@ -479,47 +487,102 @@
       }
 
       .feature-card h3 {
-        margin-top: 10px;
+        margin-top: 12px;
         font-size: 18px;
+        line-height: 1.2;
       }
 
       .feature-card p {
-        margin-top: 8px;
-        color: var(--muted);
-        line-height: 1.65;
+        margin-top: 9px;
         font-size: 15px;
+        line-height: 1.7;
+        color: var(--muted);
       }
 
       .info-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1.08fr 0.92fr;
         gap: 18px;
       }
 
       .install-card,
       .contact-card {
-        border-radius: 24px;
-        padding: 22px;
+        border-radius: 28px;
+        padding: 24px;
       }
 
-      .install-card ol {
-        margin: 16px 0 0;
-        padding-left: 20px;
+      .install-steps {
+        display: grid;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .step-card {
+        display: grid;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 22px;
+      }
+
+      .step-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), #5a70ef);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .step-title {
+        flex: 1;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .step-copy {
         color: var(--muted);
-        line-height: 1.8;
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      .step-shot {
+        overflow: hidden;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .step-shot img {
+        width: 100%;
+        height: auto;
       }
 
       .contact-links {
         display: grid;
         gap: 12px;
-        margin-top: 18px;
+        margin-top: 20px;
       }
 
       .contact-link {
-        padding: 14px 16px;
-        border-radius: 16px;
+        display: block;
+        padding: 16px 18px;
+        border-radius: 18px;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .contact-link.primary {
+        background: linear-gradient(135deg, rgba(129, 150, 255, 0.18), rgba(86, 199, 255, 0.12));
+        border-color: rgba(160, 182, 255, 0.22);
       }
 
       .contact-label {
@@ -529,308 +592,424 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #d8e4ff;
+        color: #dbe5ff;
+      }
+
+      .contact-value {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--muted-strong);
       }
 
       footer {
-        padding: 0 0 48px;
-        text-align: center;
+        padding: 0 0 46px;
+      }
+
+      .footer-card {
+        padding: 18px 22px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(10, 18, 42, 0.72);
         color: var(--muted);
+        text-align: center;
         font-size: 14px;
       }
 
-      @media (max-width: 960px) {
+      @media (max-width: 1080px) {
         .hero-card,
-        .devices-grid,
+        .showcase-grid,
         .info-grid,
-        .features-grid {
+        .features-grid,
+        .detail-grid {
           grid-template-columns: 1fr;
         }
       }
 
-      @media (max-width: 640px) {
-        body {
-          min-width: 0;
+      @media (max-width: 760px) {
+        .nav-inner {
+          border-radius: 28px;
+          align-items: flex-start;
+          flex-direction: column;
         }
 
-        .container {
-          width: min(100% - 20px, 1140px);
+        .hero-card,
+        .section-card,
+        .install-card,
+        .contact-card {
+          padding: 20px;
         }
 
         .hero {
           padding-top: 18px;
         }
 
-        .hero-card,
-        .section-card {
-          padding: 20px;
-        }
-
-        .toolbar-row,
-        .answers {
+        .hero-metrics,
+        .hero-mini-grid {
           grid-template-columns: 1fr;
         }
+      }
 
-        .fact-copy {
-          font-size: 24px;
+      @media (max-width: 640px) {
+        .container {
+          width: min(100% - 20px, 1180px);
         }
       }
     </style>
   </head>
   <body>
-    <header class="hero">
-      <div class="container">
-        <section class="hero-card">
-          <div>
-            <div class="brand">
-              <div class="brand-mark">
+    <div class="page-shell">
+      <div class="site-nav">
+        <div class="container">
+          <div class="nav-inner">
+            <div class="nav-brand">
+              <div class="nav-brand-mark">
                 <img src="logo.png" alt="FAQ logo" />
               </div>
-              <span class="eyebrow">Chrome Extension</span>
+              <div>
+                <div class="nav-title">FAQ</div>
+                <div class="nav-subtitle">Facts and Quiz</div>
+              </div>
             </div>
 
-            <h1>FAQ</h1>
-            <p class="subtitle">Facts and Quiz</p>
-            <p class="lead">
-              FAQ turns quick moments of curiosity into a polished experience: browse curated facts, track what you
-              have already explored, and test yourself with a clean true / false quiz.
-            </p>
-
-            <div class="cta-row">
-              <a class="button button-primary" href="./Fun-Fuckt-main.zip" download>
-                <span>â¬‡</span>
-                <span>Download ZIP</span>
-              </a>
-              <a class="button button-secondary" href="#install">
-                <span>đź§©</span>
-                <span>Installation Guide</span>
-              </a>
-            </div>
-
-            <div class="meta-row">
-              <span class="meta-chip">597 curated facts</span>
-              <span class="meta-chip">6 categories</span>
-              <span class="meta-chip">Favorites + progress + quiz</span>
+            <div class="nav-links">
+              <a class="nav-link" href="#screens">Screens</a>
+              <a class="nav-link" href="#features">Features</a>
+              <a class="nav-link" href="#install">Install</a>
+              <a class="nav-link" href="#contact">Contact</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="hero-preview">
-            <article class="device-frame large">
-              <div class="device-head">
-                <span>Browser popup preview</span>
-                <span class="dots"><span></span><span></span><span></span></span>
+      <header class="hero">
+        <div class="container">
+          <section class="hero-card">
+            <div>
+              <div class="brand-row">
+                <div class="brand-mark">
+                  <img src="logo.png" alt="FAQ logo" />
+                </div>
+                <span class="eyebrow">Chrome Extension</span>
               </div>
-              <div class="screen">
-                <div class="mini-top">
-                  <div class="mini-logo"><img src="logo.png" alt="" /></div>
-                  <div>
-                    <div class="mini-title">FAQ</div>
-                    <div class="mini-subtitle">Facts and Quiz</div>
-                  </div>
-                </div>
-                <div class="tab-row">
-                  <div class="tab active">Facts</div>
-                  <div class="tab">Progress</div>
-                  <div class="tab">Quiz</div>
-                </div>
-                <div class="toolbar-row">
-                  <div class="input-shell"><span>All categories</span><span>âŚ„</span></div>
-                  <div class="toggle-shell"><span>â‘ Favorites</span></div>
-                </div>
-                <div class="fact-card">
-                  <div class="fact-top">
-                    <span class="chip">Science</span>
-                    <span class="star">â†</span>
-                  </div>
-                  <p class="fact-copy">Science is a way of learning about the natural world.</p>
-                </div>
-                <div class="screen-action">Next fact</div>
+
+              <h1>FAQ</h1>
+              <p class="hero-subtitle">Facts and Quiz</p>
+              <p class="hero-lead">
+                A polished Chrome extension for quick learning moments. Browse curated facts, save favorites, track how
+                much you have already explored, and jump into a fast true / false challenge without leaving the browser.
+              </p>
+
+              <div class="hero-metrics">
+                <article class="metric-card">
+                  <div class="metric-value">597</div>
+                  <div class="metric-label">Total facts available</div>
+                </article>
+                <article class="metric-card">
+                  <div class="metric-value">6</div>
+                  <div class="metric-label">Knowledge categories</div>
+                </article>
+                <article class="metric-card">
+                  <div class="metric-value">3</div>
+                  <div class="metric-label">Modes: Facts, Progress, Quiz</div>
+                </article>
               </div>
-            </article>
+
+              <div class="cta-row">
+                <a class="button button-primary" href="#install">
+                  <span>&#129513;</span>
+                  <span>Install FAQ</span>
+                </a>
+                <a class="button button-secondary" href="../Fun-Fuckt-main.zip" download>
+                  <span>&#11015;</span>
+                  <span>Download project ZIP</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="hero-shot-stack">
+              <div class="hero-main-shot">
+                <img src="enjoy.png" alt="FAQ extension popup screenshot" />
+              </div>
+
+              <div class="hero-mini-grid">
+                <article class="hero-mini-card">
+                  <div class="hero-mini-label">Fast browsing</div>
+                  <p class="hero-mini-copy">Open the popup, get a fact instantly, and keep going without friction.</p>
+                </article>
+                <article class="hero-mini-card">
+                  <div class="hero-mini-label">Built for repeat use</div>
+                  <p class="hero-mini-copy">Favorites, progress, and quiz mode give the extension real staying power.</p>
+                </article>
+              </div>
+            </div>
+          </section>
+        </div>
+      </header>
+
+      <main>
+        <section id="screens" class="section">
+          <div class="container">
+            <div class="section-card">
+              <div class="section-heading">
+                <h2>See the product in action</h2>
+                <p>
+                  Real screenshots from the extension, presented in a cleaner product showcase layout for customers,
+                  journalists, and anyone evaluating the project.
+                </p>
+              </div>
+
+              <div class="showcase-grid">
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>Main popup experience</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="img1.png" alt="FAQ facts mode screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    The main popup keeps the focus on one strong fact at a time, with quick access to category filters,
+                    favorites, and the next interaction.
+                  </p>
+                </article>
+
+                <div class="stack">
+                  <article class="screenshot-card">
+                    <div class="shot-head">
+                      <span>Reading flow</span>
+                      <span class="shot-dots"><span></span><span></span><span></span></span>
+                    </div>
+                    <div class="shot-frame">
+                      <img src="enjoy.png" alt="FAQ browsing experience screenshot" />
+                    </div>
+                    <p class="shot-caption">
+                      A focused fact card design makes the extension feel more like a premium micro-learning tool than a simple randomizer.
+                    </p>
+                  </article>
+
+                  <article class="screenshot-card">
+                    <div class="shot-head">
+                      <span>One-click access</span>
+                      <span class="shot-dots"><span></span><span></span><span></span></span>
+                    </div>
+                    <div class="shot-frame">
+                      <img src="pin.png" alt="Pinned FAQ extension in Chrome toolbar" />
+                    </div>
+                    <p class="shot-caption">
+                      Once pinned, FAQ stays one click away in Chrome for fast fact browsing during breaks, study sessions, or quick curiosity checks.
+                    </p>
+                  </article>
+                </div>
+              </div>
+
+              <div class="detail-grid">
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>FAQ overview</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="ukazka_FAQ.png" alt="FAQ main overview screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    A compact overview of the extension with the main browsing interface, quick navigation, and strong fact-first layout.
+                  </p>
+                </article>
+
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>Favorites only</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="ukazka_favorites_only.png" alt="FAQ favorites only screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    Saved facts can be filtered into a tighter personal collection for faster revisiting and review.
+                  </p>
+                </article>
+
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>Progress tracking</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="ukazka_progress.png" alt="FAQ progress mode screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    Progress mode shows how much of each category the user has already covered through true facts.
+                  </p>
+                </article>
+
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>Quiz mode</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="ukazka_quiz.png" alt="FAQ quiz mode screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    The same dataset becomes a lightweight true / false challenge with fast interaction and feedback.
+                  </p>
+                </article>
+
+                <article class="screenshot-card">
+                  <div class="shot-head">
+                    <span>Settings</span>
+                    <span class="shot-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="shot-frame">
+                    <img src="ukazka_settings.png" alt="FAQ settings screenshot" />
+                  </div>
+                  <p class="shot-caption">
+                    Users can define default startup behavior, quiz preferences, and reset tools from a dedicated settings page.
+                  </p>
+                </article>
+              </div>
+            </div>
           </div>
         </section>
-      </div>
-    </header>
 
-    <main>
-      <section class="section">
-        <div class="container">
-          <div class="section-card">
-            <div class="section-heading">
-              <h2>Product views</h2>
-              <p>Multiple product screenshots presented in framed device-style layouts for customers, journalists, and investors.</p>
-            </div>
+        <section id="features" class="section">
+          <div class="container">
+            <div class="section-card">
+              <div class="section-heading">
+                <h2>What makes FAQ useful</h2>
+                <p>Beyond random facts, the extension includes enough structure to make people come back and keep learning.</p>
+              </div>
 
-            <div class="devices-grid">
-              <article class="device-frame">
-                <div class="device-head">
-                  <span>Quiz mode</span>
-                  <span class="dots"><span></span><span></span><span></span></span>
-                </div>
-                <div class="screen">
-                  <div class="mini-top">
-                    <div class="mini-logo"><img src="logo.png" alt="" /></div>
-                    <div>
-                      <div class="mini-title">FAQ</div>
-                      <div class="mini-subtitle">True / False challenge</div>
-                    </div>
-                  </div>
-                  <div class="score-shell">
-                    <div class="score-pill">Correct 18</div>
-                    <div class="score-pill">Wrong 4</div>
-                  </div>
-                  <div class="fact-card" style="min-height: 250px; margin-top: 14px;">
-                    <span class="chip">Technology</span>
-                    <p class="quiz-statement">The internet and the World Wide Web are exactly the same thing.</p>
-                  </div>
-                  <div class="answers">
-                    <div class="answer-btn">True</div>
-                    <div class="answer-btn active">False</div>
-                  </div>
-                </div>
-              </article>
-
-              <div class="stack">
-                <article class="device-frame">
-                  <div class="device-head">
-                    <span>Progress mode</span>
-                    <span class="dots"><span></span><span></span><span></span></span>
-                  </div>
-                  <div class="screen">
-                    <div class="mini-top">
-                      <div class="mini-logo"><img src="logo.png" alt="" /></div>
-                      <div>
-                        <div class="mini-title">FAQ</div>
-                        <div class="mini-subtitle">Seen true facts</div>
-                      </div>
-                    </div>
-                    <div class="progress-shell">
-                      <div class="progress-item">
-                        <div class="progress-head"><strong>Space</strong><span>39 / 102</span></div>
-                        <div class="bar"><span style="width: 38%;"></span></div>
-                      </div>
-                      <div class="progress-item">
-                        <div class="progress-head"><strong>Science</strong><span>28 / 98</span></div>
-                        <div class="bar"><span style="width: 29%;"></span></div>
-                      </div>
-                      <div class="progress-item">
-                        <div class="progress-head"><strong>History</strong><span>16 / 99</span></div>
-                        <div class="bar"><span style="width: 16%;"></span></div>
-                      </div>
-                    </div>
-                  </div>
+              <div class="features-grid">
+                <article class="feature-card">
+                  <div class="feature-symbol">&#129504;</div>
+                  <h3>Curated fact browsing</h3>
+                  <p>Explore facts across science, space, history, animals, technology, and nature in a clean popup.</p>
                 </article>
 
-                <article class="device-frame">
-                  <div class="device-head">
-                    <span>Compact popup UI</span>
-                    <span class="dots"><span></span><span></span><span></span></span>
-                  </div>
-                  <div class="screen">
-                    <div class="fact-card" style="min-height: 210px;">
-                      <div class="fact-top">
-                        <span class="chip">History</span>
-                        <span class="star">â…</span>
-                      </div>
-                      <p style="font-size: 19px; line-height: 1.4; font-weight: 700;">The Roman Empire declined over a long period rather than falling in a single day.</p>
-                    </div>
-                  </div>
+                <article class="feature-card">
+                  <div class="feature-symbol">&#11088;</div>
+                  <h3>Favorites collection</h3>
+                  <p>Save standout facts and revisit them later with a dedicated favorites-only flow.</p>
+                </article>
+
+                <article class="feature-card">
+                  <div class="feature-symbol">&#128202;</div>
+                  <h3>Progress tracking</h3>
+                  <p>Track how many true facts you have already seen and how far you are in each category.</p>
+                </article>
+
+                <article class="feature-card">
+                  <div class="feature-symbol">&#9989;</div>
+                  <h3>True / False quiz</h3>
+                  <p>Switch from passive reading to lightweight quiz practice with quick answer feedback.</p>
+                </article>
+
+                <article class="feature-card">
+                  <div class="feature-symbol">&#9881;</div>
+                  <h3>Configurable defaults</h3>
+                  <p>Choose startup behavior, default category, default mode, and explanation preferences.</p>
+                </article>
+
+                <article class="feature-card">
+                  <div class="feature-symbol">&#128190;</div>
+                  <h3>Persistent local state</h3>
+                  <p>Favorites, last fact, quiz totals, and progress are stored through Chrome storage for continuity.</p>
                 </article>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-card">
-            <div class="section-heading">
-              <h2>Core features</h2>
-              <p>Everything important is available from one fast popup, with polished states for browsing, saving, learning, and checking progress.</p>
-            </div>
+        <section id="install" class="section">
+          <div class="container">
+            <div class="info-grid">
+              <section class="install-card">
+                <div class="section-heading" style="margin-bottom: 0;">
+                  <h2>How to install FAQ</h2>
+                  <p>This version is loaded manually through Chrome Developer Mode, so the page includes the full setup guide.</p>
+                </div>
 
-            <div class="features-grid">
-              <article class="feature-card">
-                <div class="feature-symbol">đź§ </div>
-                <h3>Curated facts</h3>
-                <p>Explore a growing dataset of science, history, space, animals, nature, and technology facts in one clean interface.</p>
-              </article>
-              <article class="feature-card">
-                <div class="feature-symbol">â­</div>
-                <h3>Favorites</h3>
-                <p>Save standout facts, revisit them later, and switch into favorites-only mode when you want a tighter personal collection.</p>
-              </article>
-              <article class="feature-card">
-                <div class="feature-symbol">đź“Š</div>
-                <h3>Progress tracking</h3>
-                <p>See how many true facts you have already viewed and follow category-by-category progress with clear visual bars.</p>
-              </article>
-              <article class="feature-card">
-                <div class="feature-symbol">âś…</div>
-                <h3>True / False quiz</h3>
-                <p>Turn the same knowledge base into quick challenge rounds with curated false statements and instant answer feedback.</p>
-              </article>
-              <article class="feature-card">
-                <div class="feature-symbol">âš™ď¸Ź</div>
-                <h3>Smart defaults</h3>
-                <p>Choose default category, default mode, explanation behavior, and auto-refresh so the popup opens your way every time.</p>
-              </article>
-              <article class="feature-card">
-                <div class="feature-symbol">đź’ľ</div>
-                <h3>Local storage</h3>
-                <p>Favorites, quiz totals, last viewed fact, and progress are stored locally through Chrome storage for a lightweight experience.</p>
-              </article>
+                <div class="install-steps">
+                  <article class="step-card">
+                    <div class="step-top">
+                      <span class="step-badge">1</span>
+                      <div class="step-title">Open the Chrome extensions page</div>
+                    </div>
+                    <p class="step-copy">Go to <strong>chrome://extensions</strong> in Chrome to open the extension management screen.</p>
+                    <div class="step-shot">
+                      <img src="open_chrome_extension.png" alt="Open chrome extensions page" />
+                    </div>
+                  </article>
+
+                  <article class="step-card">
+                    <div class="step-top">
+                      <span class="step-badge">2</span>
+                      <div class="step-title">Turn on Developer mode</div>
+                    </div>
+                    <p class="step-copy">Enable <strong>Developer mode</strong> in the top-right corner so Chrome allows local extension loading.</p>
+                    <div class="step-shot">
+                      <img src="turn_on_developer_mode.png" alt="Turn on developer mode in Chrome" />
+                    </div>
+                  </article>
+
+                  <article class="step-card">
+                    <div class="step-top">
+                      <span class="step-badge">3</span>
+                      <div class="step-title">Load the extension folder</div>
+                    </div>
+                    <p class="step-copy">Click <strong>Load unpacked</strong> and select the extracted FAQ project folder.</p>
+                    <div class="step-shot">
+                      <img src="load_unpacked.png" alt="Load unpacked extension in Chrome" />
+                    </div>
+                  </article>
+
+                  <article class="step-card">
+                    <div class="step-top">
+                      <span class="step-badge">4</span>
+                      <div class="step-title">Pin FAQ for quick access</div>
+                    </div>
+                    <p class="step-copy">Pin the extension to the toolbar so facts and quiz mode stay one click away.</p>
+                    <div class="step-shot">
+                      <img src="pin.png" alt="Pin FAQ extension to Chrome toolbar" />
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section id="contact" class="contact-card">
+                <div class="section-heading" style="margin-bottom: 0;">
+                  <h2>Contact the developer</h2>
+                  <p>For feedback, collaboration, testing, or press requests, use one of the options below.</p>
+                </div>
+
+                <div class="contact-links">
+                  <a class="contact-link primary" href="mailto:your.email@example.com">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">your.email@example.com</span>
+                  </a>
+
+                  <a class="contact-link" href="../Fun-Fuckt-main.zip" download>
+                    <span class="contact-label">Download</span>
+                    <span class="contact-value">Download the current extension ZIP</span>
+                  </a>
+
+                  <a class="contact-link" href="#install">
+                    <span class="contact-label">Need installation help?</span>
+                    <span class="contact-value">Follow the 4-step guide above</span>
+                  </a>
+                </div>
+              </section>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <section id="install" class="section">
+      <footer>
         <div class="container">
-          <div class="info-grid">
-            <section class="install-card">
-              <div class="section-heading" style="margin-bottom: 0;">
-                <h2>How to install</h2>
-                <p>This extension currently uses manual installation through Chrome Developer Mode.</p>
-              </div>
-              <ol>
-                <li>Download the project ZIP using the button above and extract it.</li>
-                <li>Open Chrome and go to <strong>chrome://extensions</strong>.</li>
-                <li>Enable <strong>Developer mode</strong> in the top-right corner.</li>
-                <li>Click <strong>Load unpacked</strong> and select the extracted folder.</li>
-                <li>Pin <strong>FAQ</strong> to the toolbar and start browsing facts and quizzes.</li>
-              </ol>
-            </section>
-
-            <section class="contact-card">
-              <div class="section-heading" style="margin-bottom: 0;">
-                <h2>Contact the developer</h2>
-                <p>Use the channels below for questions, feedback, collaboration, or press requests.</p>
-              </div>
-
-              <div class="contact-links">
-                <a class="contact-link" href="mailto:your.email@example.com">
-                  <span class="contact-label">Email</span>
-                  <span>your.email@example.com</span>
-                </a>
-                <a class="contact-link" href="./Fun-Fuckt-main.zip" download>
-                  <span class="contact-label">Download</span>
-                  <span>Get the latest extension ZIP</span>
-                </a>
-                <a class="contact-link" href="#install">
-                  <span class="contact-label">Setup guide</span>
-                  <span>Open the installation instructions</span>
-                </a>
-              </div>
-            </section>
-          </div>
+          <div class="footer-card">FAQ - Facts and Quiz. Built as a clean Chrome extension for curiosity, progress, favorites, and quick review.</div>
         </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="container">FAQ - Facts and Quiz. Built as a clean Chrome extension experience for curiosity, learning, and quick review.</div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>
