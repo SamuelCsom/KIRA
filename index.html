@@ -809,13 +809,9 @@
                   <span>&#129513;</span>
                   <span>View install guide</span>
                 </a>
-                <a class="button button-secondary" data-download="Fun-Fuckt-main.zip" href="../Fun-Fuckt-main.zip" download>
+                <a class="button button-secondary" href="./Fun-Fuckt-main.zip" download>
                   <span>&#11015;</span>
                   <span>Download project ZIP</span>
-                </a>
-                <a class="button button-tertiary" href="#store">
-                  <span>&#127760;</span>
-                  <span>Chrome Web Store</span>
                 </a>
               </div>
             </div>
@@ -1008,7 +1004,7 @@
               <section class="install-card">
                 <div class="section-heading" style="margin-bottom: 0;">
                   <h2>How to install Facts&Quiz</h2>
-                  <p>Use the ZIP download and the manual Chrome Developer Mode steps below. This is the correct install flow until the Chrome Web Store version is published.</p>
+                  <p>Use the ZIP download and the manual Chrome Developer Mode steps below to install the current build.</p>
                 </div>
 
                 <div class="install-steps">
@@ -1057,12 +1053,6 @@
                   </article>
                 </div>
 
-                <div id="store" class="store-note">
-                  <strong>Chrome Web Store:</strong> once the extension is published, replace the temporary website button with your real store listing URL.
-                  Then the ideal flow is:
-                  <strong>Chrome Web Store</strong> for normal users,
-                  <strong>Download ZIP + manual install</strong> for testing or private builds.
-                </div>
               </section>
 
               <section id="contact" class="contact-card">
@@ -1077,12 +1067,7 @@
                     <span class="contact-value">your.email@example.com</span>
                   </a>
 
-                  <a class="contact-link" href="#store">
-                    <span class="contact-label">Chrome Web Store</span>
-                    <span class="contact-value">Add your published extension listing here when it is live.</span>
-                  </a>
-
-                  <a class="contact-link" data-download="Fun-Fuckt-main.zip" href="../Fun-Fuckt-main.zip" download>
+                  <a class="contact-link" href="./Fun-Fuckt-main.zip" download>
                     <span class="contact-label">Download</span>
                     <span class="contact-value">Download the current extension ZIP</span>
                   </a>
@@ -1135,11 +1120,6 @@
 
           image.onerror = tryNextSource;
           tryNextSource();
-        });
-
-        document.querySelectorAll("[data-download]").forEach((link) => {
-          const fileName = link.dataset.download;
-          link.href = isInsideGithubPageFolder ? `../${fileName}` : `./${fileName}`;
         });
       })();
     </script>
