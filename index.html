@@ -326,6 +326,10 @@
         background: rgba(255, 255, 255, 0.06);
       }
 
+      .button-tertiary {
+        background: rgba(86, 199, 255, 0.08);
+      }
+
       .hero-shot-stack {
         display: grid;
         gap: 16px;
@@ -392,8 +396,9 @@
 
       .showcase-grid {
         display: grid;
-        grid-template-columns: 1.08fr 0.92fr;
+        grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
         gap: 22px;
+        align-items: start;
       }
 
       .detail-grid {
@@ -401,6 +406,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 20px;
         margin-top: 22px;
+      }
+
+      .detail-grid .screenshot-card-wide {
+        grid-column: 1 / -1;
       }
 
       .stack {
@@ -420,7 +429,8 @@
         gap: 12px;
         margin-bottom: 12px;
         color: #d6e1fc;
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 800;
       }
 
       .shot-dots {
@@ -449,16 +459,54 @@
       }
 
       .shot-frame img {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
+        max-height: 560px;
         height: auto;
         object-fit: contain;
       }
 
       .shot-caption {
         margin-top: 12px;
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1.65;
         color: var(--muted);
+      }
+
+      .screenshot-card-wide .shot-frame {
+        min-height: 520px;
+        padding: 16px;
+      }
+
+      .screenshot-card-wide .shot-frame img {
+        width: 100%;
+        max-width: 1320px;
+        max-height: none;
+      }
+
+      .settings-card {
+        padding: 22px;
+      }
+
+      .settings-card .shot-frame {
+        min-height: 560px;
+      }
+
+      .settings-card .shot-frame img {
+        max-width: 1500px;
+      }
+
+      .showcase-grid > .screenshot-card .shot-frame {
+        min-height: 520px;
+      }
+
+      .stack .shot-frame {
+        min-height: 420px;
+      }
+
+      .stack .shot-frame img {
+        width: 100%;
+        max-width: 760px;
       }
 
       .features-grid {
@@ -595,6 +643,21 @@
         border-color: rgba(160, 182, 255, 0.22);
       }
 
+      .store-note {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .store-note strong {
+        color: var(--muted-strong);
+      }
+
       .contact-label {
         display: block;
         margin-bottom: 6px;
@@ -666,6 +729,11 @@
           min-height: 260px;
         }
 
+        .showcase-grid > .screenshot-card .shot-frame,
+        .stack .shot-frame {
+          min-height: 300px;
+        }
+
         .step-shot {
           min-height: 200px;
         }
@@ -723,7 +791,7 @@
 
               <div class="hero-metrics">
                 <article class="metric-card">
-                  <div class="metric-value">597</div>
+                  <div class="metric-value">906</div>
                   <div class="metric-label">Total facts available</div>
                 </article>
                 <article class="metric-card">
@@ -739,11 +807,15 @@
               <div class="cta-row">
                 <a class="button button-primary" href="#install">
                   <span>&#129513;</span>
-                    <span>Install Facts&Quiz</span>
+                  <span>View install guide</span>
                 </a>
                 <a class="button button-secondary" data-download="Fun-Fuckt-main.zip" href="../Fun-Fuckt-main.zip" download>
                   <span>&#11015;</span>
                   <span>Download project ZIP</span>
+                </a>
+                <a class="button button-tertiary" href="#store">
+                  <span>&#127760;</span>
+                  <span>Chrome Web Store</span>
                 </a>
               </div>
             </div>
@@ -834,20 +906,7 @@
                     <img src="./ukazka_FAQ.png" data-image="ukazka_FAQ.png" alt="Facts&Quiz main overview screenshot" />
                   </div>
                   <p class="shot-caption">
-                    A compact overview of the extension with the main browsing interface, quick navigation, and strong fact-first layout.
-                  </p>
-                </article>
-
-                <article class="screenshot-card">
-                  <div class="shot-head">
-                    <span>Favorites only</span>
-                    <span class="shot-dots"><span></span><span></span><span></span></span>
-                  </div>
-                  <div class="shot-frame">
-                    <img src="./ukazka_favorites_only.png" data-image="ukazka_favorites_only.png" alt="Facts&Quiz favorites only screenshot" />
-                  </div>
-                  <p class="shot-caption">
-                    Saved facts can be filtered into a tighter personal collection for faster revisiting and review.
+                    A compact overview of the extension with the main browsing interface, quick navigation, a favorites filter, and strong fact-first layout.
                   </p>
                 </article>
 
@@ -877,7 +936,7 @@
                   </p>
                 </article>
 
-                <article class="screenshot-card">
+                <article class="screenshot-card screenshot-card-wide settings-card">
                   <div class="shot-head">
                     <span>Settings</span>
                     <span class="shot-dots"><span></span><span></span><span></span></span>
@@ -949,7 +1008,7 @@
               <section class="install-card">
                 <div class="section-heading" style="margin-bottom: 0;">
                   <h2>How to install Facts&Quiz</h2>
-                  <p>This version is loaded manually through Chrome Developer Mode, so the page includes the full setup guide.</p>
+                  <p>Use the ZIP download and the manual Chrome Developer Mode steps below. This is the correct install flow until the Chrome Web Store version is published.</p>
                 </div>
 
                 <div class="install-steps">
@@ -997,6 +1056,13 @@
                     </div>
                   </article>
                 </div>
+
+                <div id="store" class="store-note">
+                  <strong>Chrome Web Store:</strong> once the extension is published, replace the temporary website button with your real store listing URL.
+                  Then the ideal flow is:
+                  <strong>Chrome Web Store</strong> for normal users,
+                  <strong>Download ZIP + manual install</strong> for testing or private builds.
+                </div>
               </section>
 
               <section id="contact" class="contact-card">
@@ -1009,6 +1075,11 @@
                   <a class="contact-link primary" href="mailto:your.email@example.com">
                     <span class="contact-label">Email</span>
                     <span class="contact-value">your.email@example.com</span>
+                  </a>
+
+                  <a class="contact-link" href="#store">
+                    <span class="contact-label">Chrome Web Store</span>
+                    <span class="contact-value">Add your published extension listing here when it is live.</span>
                   </a>
 
                   <a class="contact-link" data-download="Fun-Fuckt-main.zip" href="../Fun-Fuckt-main.zip" download>
