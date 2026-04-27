@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <style>
-      : root {
+      :root {
         color-scheme: dark;
         --bg-top: #060d1c;
         --bg-mid: #0b1430;
@@ -73,7 +73,6 @@
         z-index: 0;
       }
 
-
       body::before {
         top: -120px;
         left: -80px;
@@ -100,12 +99,6 @@
         position: relative;
         z-index: 1;
       }
-      .contact-links {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        }
-      
 
       .container {
         width: min(1180px, calc(100% - 32px));
@@ -695,16 +688,6 @@
         font-size: 14px;
       }
 
-      .footer-card a {
-        color: #dbe5ff;
-        font-weight: 700;
-        text-decoration: none;
-      }
-
-      .footer-card a:hover {
-        color: var(--accent);
-      }
-
       @media (max-width: 1080px) {
         .hero-card,
         .showcase-grid,
@@ -826,7 +809,7 @@
                   <span>&#129513;</span>
                   <span>View install guide</span>
                 </a>
-                <a class="button button-secondary" href="./Facts&Quiz.zip" download>
+                <a class="button button-secondary" href="./Fun-Fuckt-main.zip" download>
                   <span>&#11015;</span>
                   <span>Download project ZIP</span>
                 </a>
@@ -1071,18 +1054,24 @@
                 </div>
 
               </section>
+
               <section id="contact" class="contact-card">
                 <div class="section-heading" style="margin-bottom: 0;">
                   <h2>Contact the developer</h2>
                   <p>For feedback, collaboration, testing, or press requests, use one of the options below.</p>
                 </div>
-              
+
                 <div class="contact-links">
-                  <a class="contact-link" href="./Fun-Fuckt-main.zip" download>
+                  <a class="contact-link primary" href="mailto:your.email@example.com">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">your.email@example.com</span>
+                  </a>
+
+                  <a class="contact-link" href="./Fackts&Quiz.zip" download>
                     <span class="contact-label">Download</span>
                     <span class="contact-value">Download the current extension ZIP</span>
                   </a>
-              
+
                   <a class="contact-link" href="#install">
                     <span class="contact-label">Need installation help?</span>
                     <span class="contact-value">Follow the 4-step guide above</span>
@@ -1096,7 +1085,7 @@
 
       <footer>
         <div class="container">
-          <div class="footer-card">Facts&Quiz. Built as a clean Chrome extension for curiosity, progress, favorites, and quick review. <a href="./privacy.html">Privacy Policy</a></div>
+          <div class="footer-card">Facts&Quiz. Built as a clean Chrome extension for curiosity, progress, favorites, and quick review.</div>
         </div>
       </footer>
     </div>
