@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <style>
-      :root {
+      : root {
         color-scheme: dark;
         --bg-top: #060d1c;
         --bg-mid: #0b1430;
@@ -73,6 +73,7 @@
         z-index: 0;
       }
 
+
       body::before {
         top: -120px;
         left: -80px;
@@ -99,6 +100,12 @@
         position: relative;
         z-index: 1;
       }
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        }
+      
 
       .container {
         width: min(1180px, calc(100% - 32px));
@@ -1070,15 +1077,17 @@
                   <h2>Contact the developer</h2>
                   <p>For feedback, collaboration, testing, or press requests, use one of the options below.</p>
                 </div>
-
-                  <a class="contact-link" href="./Fun-Fuckt-main.zip" download>
-                    <span class="contact-label">Download</span>
-                    <span class="contact-value">Download the current extension ZIP</span>
-                  </a>
-
-                  <a class="contact-link" href="#install">
-                    <span class="contact-label">Need installation help?</span>
-                    <span class="contact-value">Follow the 4-step guide above</span>
+                    <div class="contact-links">
+                      <a class="contact-link" href="./Fun-Fuckt-main.zip" download>
+                          <span class="contact-label">Download</span>
+                          <span class="contact-value">Download the current extension ZIP</span>
+                      </a>
+                  
+                      <a class="contact-link" href="#install">
+                          <span class="contact-label">Need installation help?</span>
+                          <span class="contact-value">Follow the 4-step guide above</span>
+                      </a>
+                  </div>
                   </a>
                 </div>
               </section>
